@@ -38,6 +38,7 @@ export default tseslint.config(
       '@typescript-eslint/no-unsafe-argument': 'warn',
       "simple-import-sort/imports": "error",
       "simple-import-sort/exports": "error",
+      "@typescript-eslint/require-await": "off"
     },
   },
 );
