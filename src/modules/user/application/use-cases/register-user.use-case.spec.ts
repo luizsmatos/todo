@@ -1,13 +1,13 @@
-import bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcrypt';
 
+import { InMemoryUsersRepository } from '../../__test__/repositories/in-memory-users.repository';
+import { UserAlreadyExistsException } from '../../domain/exceptions/user-already-exists.exception';
 import {
   RegisterUserUseCase,
   RegisterUserUseCaseInput,
-} from '../../application/use-cases/register-user.use-case';
-import { UserAlreadyExistsException } from '../../domain/exceptions/user-already-exists.exception';
-import { InMemoryUsersRepository } from '../repositories/in-memory-users.repository';
+} from './register-user.use-case';
 
-vitest.mock('bcryptjs');
+vitest.mock('bcrypt');
 
 let sut: RegisterUserUseCase;
 let inMemoryUsersRepository: InMemoryUsersRepository;
