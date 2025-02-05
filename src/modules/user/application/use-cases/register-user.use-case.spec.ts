@@ -13,6 +13,12 @@ let sut: RegisterUserUseCase;
 let inMemoryUsersRepository: InMemoryUsersRepository;
 
 describe('RegisterUserUseCase', () => {
+  beforeAll(() => {
+    vi.mocked(bcrypt.hash).mockImplementation(
+      (password) => `hashed_${password as string}`,
+    );
+  });
+
   beforeEach(() => {
     inMemoryUsersRepository = new InMemoryUsersRepository();
     sut = new RegisterUserUseCase(inMemoryUsersRepository);
