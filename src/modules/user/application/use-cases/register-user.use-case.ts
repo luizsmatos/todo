@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcrypt';
 
 import { User } from '../../domain/entities/user.entity';
 import { UserAlreadyExistsException } from '../../domain/exceptions/user-already-exists.exception';
