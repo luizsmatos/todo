@@ -26,6 +26,7 @@
     "strict": true,
     "esModuleInterop": true,
     "types": ["vitest/globals"],
+    "strictPropertyInitialization": false
   },
   "include": ["src/**/*", "test/**/*", "vitest.config.ts", "vitest.config.e2e.ts"],
 }
