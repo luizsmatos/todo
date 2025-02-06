@@ -1,6 +1,6 @@
 import { User } from '../entities/user.entity';
 
-export interface UsersRepository {
-  create(user: User): Promise<void>;
-  findByEmail(email: string): Promise<User | null>;
+export abstract class UsersRepository {
+  abstract create(user: User): Promise<void>;
+  abstract findByEmail(email: string): Promise<User | null>;
 }
