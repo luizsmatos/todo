@@ -24,4 +24,12 @@ export class Task {
     this.createdAt = task.createdAt ?? new Date();
     this.updatedAt = task.updatedAt ?? null;
   }
+
+  static validateStatus(status: string) {
+    if (!Object.values(TaskStatus).includes(status as TaskStatus)) {
+      throw new Error(`Invalid status: ${status}`);
+    }
+
+    return status as TaskStatus;
+  }
 }
