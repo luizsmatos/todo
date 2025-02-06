@@ -1,3 +1,5 @@
+import { Injectable } from '@nestjs/common';
+
 import { Task, TaskStatus } from '../../domain/entities/task.entity';
 import { TaskAlreadyExistsException } from '../../domain/exceptions/task-already-exists.exception';
 import { TasksRepository } from '../../domain/repositories/tasks.repository';
@@ -12,6 +14,7 @@ export interface CreateTaskUseCaseOutput {
   task: Task;
 }
 
+@Injectable()
 export class CreateTaskUseCase {
   constructor(private readonly tasksRepository: TasksRepository) {}
 

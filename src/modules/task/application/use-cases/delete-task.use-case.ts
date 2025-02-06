@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common';
 import { NotAllowedException } from '@shared/domain/exceptions/not-allowed.exception';
 import { ResourceNotFoundException } from '@shared/domain/exceptions/resource-not-found.exception';
 
@@ -7,7 +8,7 @@ export interface DeleteTaskUseCaseInput {
   userId: string;
   taskId: string;
 }
-
+@Injectable()
 export class DeleteTaskUseCase {
   constructor(private readonly tasksRepository: TasksRepository) {}
 
