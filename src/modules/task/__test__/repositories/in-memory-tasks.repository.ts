@@ -17,4 +17,20 @@ export class InMemoryTasksRepository implements TasksRepository {
 
     return task;
   }
+
+  async findById(id: string): Promise<Task | null> {
+    const task = this.items.find((task) => task.id === id);
+
+    if (!task) {
+      return null;
+    }
+
+    return task;
+  }
+
+  async update(task: Task): Promise<void> {
+    const taskIndex = this.items.findIndex((item) => item.id === task.id);
+
+    this.items[taskIndex] = task;
+  }
 }
