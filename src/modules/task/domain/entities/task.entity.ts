@@ -7,7 +7,7 @@ export enum TaskStatus {
 }
 
 export class Task {
-  id?: string;
+  id: string;
   title: string;
   description: string;
   userId: string;
@@ -15,8 +15,8 @@ export class Task {
   createdAt?: Date;
   updatedAt?: Date | null;
 
-  constructor(task: Task) {
-    this.id = task.id ?? crypto.randomUUID();
+  constructor(task: Omit<Task, 'id'>, id?: string) {
+    this.id = id ?? crypto.randomUUID();
     this.title = task.title;
     this.description = task.description;
     this.status = task.status;
