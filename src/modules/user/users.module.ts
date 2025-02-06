@@ -5,6 +5,6 @@ import { UsersPersistenceModule } from './infrastructure/persistence/users-persi
 
 @Module({
   imports: [UsersHttpModule, UsersPersistenceModule],
-  exports: [UsersHttpModule, UsersPersistenceModule],
+  exports: [UsersPersistenceModule],
 })
 export class UsersModule {}
