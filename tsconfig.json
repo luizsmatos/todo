@@ -27,5 +27,5 @@
     "esModuleInterop": true,
     "types": ["vitest/globals"],
   },
-  "include": ["src/**/*", "test/**/*"],
+  "include": ["src/**/*", "test/**/*", "vitest.config.ts", "vitest.config.e2e.ts"],
 }
