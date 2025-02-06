@@ -1,5 +1,5 @@
-import { mockCreateTask } from '../../__task__/fixtures/mock-create-task';
-import { InMemoryTasksRepository } from '../../__task__/repositories/in-memory-tasks.repository';
+import { mockCreateTask } from '../../__test__/fixtures/mock-create-task';
+import { InMemoryTasksRepository } from '../../__test__/repositories/in-memory-tasks.repository';
 import { TaskStatus } from '../../domain/entities/task.entity';
 import { TaskAlreadyExistsException } from '../../domain/exceptions/task-already-exists.exception';
 import { CreateTaskUseCase } from './create-task.use-case';
