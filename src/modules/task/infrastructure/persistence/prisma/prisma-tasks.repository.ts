@@ -132,6 +132,7 @@ export class PrismaTasksRepository implements TasksRepository {
 
   async create(task: Task): Promise<void> {
     const toPrisma: Prisma.TaskUncheckedCreateInput = {
+      id: task.id,
       title: task.title,
       description: task.description,
       status: task.status.toString(),
