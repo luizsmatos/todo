@@ -1,5 +1,13 @@
+import {
+  Pagination,
+  PaginationParams,
+} from '@shared/domain/value-objects/pagination';
+
 import { Task } from '../../domain/entities/task.entity';
-import { TasksRepository } from '../../domain/repositories/tasks.repository';
+import {
+  TaskFilters,
+  TasksRepository,
+} from '../../domain/repositories/tasks.repository';
 
 export class InMemoryTasksRepository implements TasksRepository {
   items: Task[] = [];
@@ -38,5 +46,41 @@ export class InMemoryTasksRepository implements TasksRepository {
     const taskIndex = this.items.findIndex((item) => item.id === id);
 
     this.items.splice(taskIndex, 1);
+  }
+
+  async findManyByUserId(
+    userId: string,
+    options: { pagination: PaginationParams; filters: TaskFilters },
+  ): Promise<Pagination<Task>> {
+    const { page, pageSize } = options.pagination;
+    const { title, description, status } = options.filters;
+
+    const items = this.items.filter((task) => {
+      if (task.userId !== userId) return false;
+
+      if (title && !task.title.toLowerCase().includes(title.toLowerCase())) {
+        return false;
+      }
+
+      if (
+        description &&
+        !task.description.toLowerCase().includes(description.toLowerCase())
+      ) {
+        return false;
+      }
+
+      if (status && task.status !== status) return false;
+
+      return true;
+    });
+
+    const paginatedItems = items.slice((page - 1) * pageSize, page * pageSize);
+
+    return Pagination.create({
+      items: paginatedItems,
+      totalItems: this.items.length,
+      page,
+      pageSize,
+    });
   }
 }
