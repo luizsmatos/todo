@@ -13,7 +13,7 @@ export class User {
     this.name = user.name;
     this.email = user.email;
     this.password = user.password;
-    this.createdAt = user.createdAt || new Date();
-    this.updatedAt = user.updatedAt || null;
+    this.createdAt = user.createdAt ?? new Date();
+    this.updatedAt = user.updatedAt ?? null;
   }
 }
