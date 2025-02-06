@@ -31,6 +31,6 @@ export class PrismaUsersRepository implements UsersRepository {
       return null;
     }
 
-    return new User(user);
+    return new User(user, user.id);
   }
 }
