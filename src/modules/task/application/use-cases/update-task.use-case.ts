@@ -43,13 +43,16 @@ export class UpdateTaskUseCase {
       throw new NotAllowedException();
     }
 
-    const updatedTask = new Task({
-      ...task,
-      title,
-      description,
-      status,
-      updatedAt: new Date(),
-    });
+    const updatedTask = new Task(
+      {
+        ...task,
+        title,
+        description,
+        status,
+        updatedAt: new Date(),
+      },
+      task.id,
+    );
 
     await this.tasksRepository.update(updatedTask);
 
