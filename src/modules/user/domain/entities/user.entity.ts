@@ -1,15 +1,15 @@
 import crypto from 'node:crypto';
 
 export class User {
-  id?: string;
+  id: string;
   name: string;
   email: string;
   password: string;
   createdAt?: Date;
   updatedAt?: Date | null;
 
-  constructor(user: User) {
-    this.id = user.id ?? crypto.randomUUID();
+  constructor(user: Omit<User, 'id'>, id?: string) {
+    this.id = id ?? crypto.randomUUID();
     this.name = user.name;
     this.email = user.email;
     this.password = user.password;
