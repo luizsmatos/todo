@@ -1,5 +1,6 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Public } from '@shared/infrastructure/http/decorators/public.decorator';
 import {
   RegisterUserUseCase,
   RegisterUserUseCaseInput,
@@ -13,6 +14,7 @@ import { ApiRegisterUser } from './docs/register-user.swagger';
 export class RegisterUserController {
   constructor(private readonly registerUserUseCase: RegisterUserUseCase) {}
 
+  @Public()
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
   @ApiRegisterUser()
