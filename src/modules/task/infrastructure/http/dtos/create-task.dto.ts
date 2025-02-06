@@ -2,10 +2,16 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString, MinLength } from 'class-validator';
 
 export class CreateTaskRequestDto {
+  @ApiProperty({
+    example: 'Task 1',
+  })
   @IsString()
   @MinLength(3)
   title: string;
 
+  @ApiProperty({
+    example: 'Task 1 description',
+  })
   @IsString()
   @MinLength(3)
   description: string;
