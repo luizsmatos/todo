@@ -41,10 +41,12 @@ describe('UpdateTaskUseCase', () => {
   });
 
   it('should not be able to update a task if there is already one with the same title', async () => {
-    const createdTask = mockTask();
+    const userId = 'user-id';
+
+    const createdTask = mockTask({ userId });
     inMemoryTasksRepository.items.push(createdTask);
 
-    const createdConflictTask = mockTask();
+    const createdConflictTask = mockTask({ userId });
     inMemoryTasksRepository.items.push(createdConflictTask);
 
     const updateTask = mockUpdateTask({
