@@ -11,7 +11,7 @@ export function ApiDeleteTask() {
       description: 'Delete a task',
     }),
     ApiResponse({
-      status: HttpStatus.CREATED,
+      status: HttpStatus.NO_CONTENT,
       description: 'Task deleted successfully',
     }),
     ApiException(() => [ResourceNotFoundException, NotAllowedException]),
