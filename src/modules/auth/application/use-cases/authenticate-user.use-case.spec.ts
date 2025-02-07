@@ -1,7 +1,7 @@
 import crypto from 'node:crypto';
 
 import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
+import * as bcryptjs from 'bcryptjs';
 
 import { InMemoryUsersRepository } from '../../../user/__test__/repositories/in-memory-users.repository';
 import { WrongCredentialsException } from '../../domain/exceptions/wrong-credentials.exception';
@@ -10,7 +10,11 @@ import {
   AuthenticateUserUseCaseInput,
 } from './authenticate-user.use-case';
 
-vitest.mock('bcrypt');
+vi.mock('bcryptjs', () => ({
+  hash: vi.fn((password) => `hashed_${password}`),
+  compare: vi.fn((password, hash) => `hashed_${password}` === hash),
+}));
+
 vitest.mock('@nestjs/jwt');
 
 let sut: AuthenticateUserUseCase;
@@ -19,20 +23,12 @@ let jwtService: JwtService;
 
 describe('AuthenticateUserUseCase', () => {
   beforeAll(async () => {
-    vi.mocked(bcrypt.hash).mockImplementation(
-      (password) => `hashed_${password as string}`,
-    );
-
-    vi.mocked(bcrypt.compare).mockImplementation(
-      (password, hash) => hash === `hashed_${password as string}`,
-    );
-
     inMemoryUsersRepository = new InMemoryUsersRepository();
     inMemoryUsersRepository.items.push({
       id: crypto.randomUUID(),
       name: 'John Doe',
       email: 'Ttqgj@example.com',
-      password: await bcrypt.hash('123456', 10),
+      password: await bcryptjs.hash('123456', 10),
     });
   });
 
@@ -42,6 +38,10 @@ describe('AuthenticateUserUseCase', () => {
     });
 
     sut = new AuthenticateUserUseCase(inMemoryUsersRepository, jwtService);
+  });
+
+  afterAll(() => {
+    vi.restoreAllMocks();
   });
 
   it('should be able to authenticate a user', async () => {
@@ -77,6 +77,6 @@ describe('AuthenticateUserUseCase', () => {
     await expect(sut.execute(mockUser)).rejects.toEqual(
       new WrongCredentialsException(),
     );
-    expect(bcrypt.compare).toHaveBeenCalled();
+    expect(bcryptjs.compare).toHaveBeenCalled();
   });
 });

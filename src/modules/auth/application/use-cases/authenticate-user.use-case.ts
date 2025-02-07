@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import * as bcrypt from 'bcrypt';
+import * as bcryptjs from 'bcryptjs';
 
 import { UsersRepository } from '../../../user/domain/repositories/users.repository';
 import { WrongCredentialsException } from '../../domain/exceptions/wrong-credentials.exception';
@@ -31,7 +31,7 @@ export class AuthenticateUserUseCase {
       throw new WrongCredentialsException();
     }
 
-    const isPasswordValid = await bcrypt.compare(password, user.password);
+    const isPasswordValid = await bcryptjs.compare(password, user.password);
 
     if (!isPasswordValid) {
       throw new WrongCredentialsException();

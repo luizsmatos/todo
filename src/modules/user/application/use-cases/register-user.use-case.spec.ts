@@ -1,4 +1,4 @@
-import * as bcrypt from 'bcrypt';
+import * as bcryptjs from 'bcryptjs';
 
 import { InMemoryUsersRepository } from '../../__test__/repositories/in-memory-users.repository';
 import { UserAlreadyExistsException } from '../../domain/exceptions/user-already-exists.exception';
@@ -7,21 +7,21 @@ import {
   RegisterUserUseCaseInput,
 } from './register-user.use-case';
 
-vitest.mock('bcrypt');
+vi.mock('bcryptjs', () => ({
+  hash: vi.fn((password) => `hashed_${password}`),
+}));
 
 let sut: RegisterUserUseCase;
 let inMemoryUsersRepository: InMemoryUsersRepository;
 
 describe('RegisterUserUseCase', () => {
-  beforeAll(() => {
-    vi.mocked(bcrypt.hash).mockImplementation(
-      (password) => `hashed_${password as string}`,
-    );
-  });
-
   beforeEach(() => {
     inMemoryUsersRepository = new InMemoryUsersRepository();
     sut = new RegisterUserUseCase(inMemoryUsersRepository);
+  });
+
+  afterAll(() => {
+    vi.restoreAllMocks();
   });
 
   it('should be able to register a new user', async () => {
@@ -33,7 +33,7 @@ describe('RegisterUserUseCase', () => {
 
     const { user } = await sut.execute(mockUser);
 
-    const hashedPassword = await bcrypt.hash(mockUser.password, 10);
+    const hashedPassword = await bcryptjs.hash(mockUser.password, 10);
 
     expect(user).toEqual({
       id: expect.any(String) as string,
@@ -43,7 +43,7 @@ describe('RegisterUserUseCase', () => {
       createdAt: expect.any(Date) as Date,
       updatedAt: null,
     });
-    expect(bcrypt.hash).toHaveBeenCalledWith(mockUser.password, 10);
+    expect(bcryptjs.hash).toHaveBeenCalledWith(mockUser.password, 10);
     expect(inMemoryUsersRepository.items).toHaveLength(1);
   });
 
