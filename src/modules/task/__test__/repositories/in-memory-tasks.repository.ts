@@ -1,7 +1,4 @@
-import {
-  Pagination,
-  PaginationParams,
-} from '@shared/domain/value-objects/pagination';
+import { Pagination, PaginationParams } from '@shared/utils/pagination';
 
 import { Task } from '../../domain/entities/task.entity';
 import {
