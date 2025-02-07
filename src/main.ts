@@ -14,6 +14,7 @@ async function bootstrap() {
     .setTitle('Task App')
     .setDescription('API description')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const documentFactory = SwaggerModule.createDocument(app, swaggerConfig);
