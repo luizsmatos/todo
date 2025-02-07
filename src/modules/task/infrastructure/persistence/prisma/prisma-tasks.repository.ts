@@ -21,8 +21,8 @@ export class PrismaTasksRepository implements TasksRepository {
     this.model = prismaService.task;
   }
 
-  async findByTitle(title: string): Promise<Task | null> {
-    const task = await this.model.findFirst({ where: { title } });
+  async findByTitle(userId: string, title: string): Promise<Task | null> {
+    const task = await this.model.findFirst({ where: { userId, title } });
 
     if (!task) {
       return null;
