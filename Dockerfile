@@ -21,8 +21,8 @@ RUN npm install -g pnpm
 
 WORKDIR /usr/src/app
 
-COPY --from=builder /usr/src/app/dist ./dist
-COPY --from=builder /usr/src/app/node_modules ./node_modules
+COPY --from=builder /usr/src/app/dist ./usr/src/app/dist
+COPY --from=builder /usr/src/app/node_modules /usr/src/app/node_modules
 COPY --from=builder /usr/src/app/src/shared/infrastructure/persistence/prisma ./src/shared/infrastructure/persistence/prisma
 COPY --from=builder /usr/src/app/package.json /usr/src/app/pnpm-lock.yaml ./
 
