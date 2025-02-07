@@ -23,7 +23,10 @@ export class CreateTaskUseCase {
     title,
     description,
   }: CreateTaskUseCaseInput): Promise<CreateTaskUseCaseOutput> {
-    const taskWithSameTitle = await this.tasksRepository.findByTitle(title);
+    const taskWithSameTitle = await this.tasksRepository.findByTitle(
+      userId,
+      title,
+    );
 
     if (taskWithSameTitle) {
       throw new TaskAlreadyExistsException(title);
