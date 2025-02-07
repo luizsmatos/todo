@@ -6,15 +6,13 @@ Task App - Um aplicativo para gerenciamento de tarefas.
 
 Essas instruções permitirão que você obtenha uma cópia do projeto em operação na sua máquina local para fins de desenvolvimento e teste.
 
-Consulte **[Implantação](#-implantacao)** para saber como implantar o projeto.
-
 ### 📋 Pré-requisitos
 
 Antes de começar, certifique-se de ter os seguintes itens instalados:
 
 - [Node.js](https://nodejs.org/) (versão recomendada: 18+)
-- [NestJS CLI](https://docs.nestjs.com/) (`npm install -g @nestjs/cli`)
-- [Prisma](https://www.prisma.io/) (`npm install -g prisma`)
+- [NestJS CLI](https://docs.nestjs.com/)
+- [Prisma](https://www.prisma.io/)
 - [Docker](https://www.docker.com/) e [Docker Compose](https://docs.docker.com/compose/)
 - Banco de dados PostgreSQL
 
@@ -84,6 +82,12 @@ Caso esteja rodando em um ambiente diferente, substitua `localhost:3000` pelo ho
 ## ⚙️ Executando os testes
 
 Para rodar os testes automatizados, utilize os seguintes comandos:
+
+### 🧪 Testes unitários
+
+```sh
+npm run test
+```
 
 ### 🔩 Testes de ponta a ponta
 
