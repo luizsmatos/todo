@@ -1,10 +1,12 @@
 import { Controller, Get, HttpCode, HttpStatus, Param } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { User } from '@shared/infrastructure/http/decorators/user.decorator';
-import { GetTaskUseCase } from '@src/modules/task/application/use-cases/get-task.use-case';
+import {
+  GetTaskUseCase,
+  GetTaskUseCaseInput,
+} from '@src/modules/task/application/use-cases/get-task.use-case';
 
 import { GetTaskRequestDto, GetTaskResponseDto } from '../dtos/get-task.dto';
-import { GetTaskUseCaseInput } from './../../../application/use-cases/get-task.use-case';
 import { ApiGetTask } from './docs/get-task.swagger';
 
 @ApiTags('Tasks')

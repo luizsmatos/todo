@@ -1,13 +1,15 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { User } from '@shared/infrastructure/http/decorators/user.decorator';
-import { CreateTaskUseCase } from '@src/modules/task/application/use-cases/create-task.use-case';
+import {
+  CreateTaskUseCase,
+  CreateTaskUseCaseInput,
+} from '@src/modules/task/application/use-cases/create-task.use-case';
 
 import {
   CreateTaskRequestDto,
   CreateTaskResponseDto,
 } from '../dtos/create-task.dto';
-import { CreateTaskUseCaseInput } from './../../../application/use-cases/create-task.use-case';
 import { ApiCreateTask } from './docs/create-task.swagger';
 
 @ApiTags('Tasks')

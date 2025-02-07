@@ -7,10 +7,12 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { User } from '@shared/infrastructure/http/decorators/user.decorator';
-import { DeleteTaskUseCase } from '@src/modules/task/application/use-cases/delete-task.use-case';
+import {
+  DeleteTaskUseCase,
+  DeleteTaskUseCaseInput,
+} from '@src/modules/task/application/use-cases/delete-task.use-case';
 
 import { DeleteTaskRequestDto } from '../dtos/delete-task.dto';
-import { DeleteTaskUseCaseInput } from './../../../application/use-cases/delete-task.use-case';
 import { ApiDeleteTask } from './docs/delete-task.swagger';
 
 @ApiTags('Tasks')
