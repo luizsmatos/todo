@@ -31,20 +31,24 @@ Siga os passos abaixo para instalar e configurar o projeto:
    npm install
    ```
 
-3. Configure o banco de dados:
+3. Configure suas variáveis de ambiente:
    ```sh
+   # Certifique-se de ajustar as variáveis de ambiente conforme necessário.
    cp .env.example .env
+   ```
 
+4. Execute as migrações do banco de dados:
+   ```sh
    # Edite o arquivo .env com suas configurações de banco de dados
    npm run db:migrate:dev
    ```
 
-4. Gere os clientes Prisma:
+5. Gere os clientes Prisma:
    ```sh
    npm run db:generate
    ```
 
-5. Inicie o servidor de desenvolvimento:
+6. Inicie o servidor de desenvolvimento:
    ```sh
    npm run start:dev
    ```
