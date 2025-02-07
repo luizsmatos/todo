@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
-import { EnvModule } from '@src/shared/infrastructure/config/env/env.module';
-import { EnvService } from '@src/shared/infrastructure/config/env/env.service';
+import { EnvModule } from '@shared/infrastructure/config/env/env.module';
+import { EnvService } from '@shared/infrastructure/config/env/env.service';
 
 import { JwtStrategy } from './domain/strategies/jwt.strategy';
 import { AuthHttpModule } from './infrastructure/http/auth-http.module';
