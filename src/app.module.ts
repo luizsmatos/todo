@@ -5,6 +5,7 @@ import { TasksModule } from './modules/task/tasks.module';
 import { UsersModule } from './modules/user/users.module';
 import { EnvModule } from './shared/infrastructure/config/env/env.module';
 import { HttpExceptionFilter } from './shared/infrastructure/http/filters/http-exception.filter';
+import { ValidationExceptionFilter } from './shared/infrastructure/http/filters/validation-exception.filter';
 import { JwtAuthGuard } from './shared/infrastructure/http/guards/jwt-auth.guard';
 
 @Module({
@@ -17,6 +18,10 @@ import { JwtAuthGuard } from './shared/infrastructure/http/guards/jwt-auth.guard
     {
       provide: 'APP_FILTER',
       useClass: HttpExceptionFilter,
+    },
+    {
+      provide: 'APP_FILTER',
+      useClass: ValidationExceptionFilter,
     },
   ],
 })
