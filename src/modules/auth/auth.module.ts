@@ -17,7 +17,7 @@ import { AuthHttpModule } from './infrastructure/http/auth-http.module';
       global: true,
       useFactory: (envService: EnvService) => ({
         secret: envService.get('JWT_SECRET'),
-        signOptions: { expiresIn: '1h' },
+        signOptions: { expiresIn: '1d' },
       }),
     }),
   ],
