@@ -1,5 +1,5 @@
 import { Controller, Get, HttpCode, HttpStatus, Query } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { User } from '@shared/infrastructure/http/decorators/user.decorator';
 import {
   ListTasksUseCase,
@@ -14,6 +14,7 @@ import {
 import { ApiListTasks } from './docs/list-tasks.swagger';
 
 @ApiTags('Tasks')
+@ApiBearerAuth()
 @Controller()
 export class ListTasksController {
   constructor(private readonly listTasksUseCase: ListTasksUseCase) {}

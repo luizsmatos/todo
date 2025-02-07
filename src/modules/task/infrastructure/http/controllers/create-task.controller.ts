@@ -1,5 +1,5 @@
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { User } from '@shared/infrastructure/http/decorators/user.decorator';
 import {
   CreateTaskUseCase,
@@ -13,6 +13,7 @@ import {
 import { ApiCreateTask } from './docs/create-task.swagger';
 
 @ApiTags('Tasks')
+@ApiBearerAuth()
 @Controller()
 export class CreateTaskController {
   constructor(private readonly createTaskUseCase: CreateTaskUseCase) {}

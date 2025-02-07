@@ -6,7 +6,7 @@ import {
   Param,
   Put,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { User } from '@shared/infrastructure/http/decorators/user.decorator';
 import {
   UpdateTaskUseCase,
@@ -21,6 +21,7 @@ import {
 import { ApiUpdateTask } from './docs/update-task.swagger';
 
 @ApiTags('Tasks')
+@ApiBearerAuth()
 @Controller()
 export class UpdateTaskController {
   constructor(private readonly updateTaskUseCase: UpdateTaskUseCase) {}

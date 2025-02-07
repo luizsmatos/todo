@@ -5,7 +5,7 @@ import {
   HttpStatus,
   Param,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { User } from '@shared/infrastructure/http/decorators/user.decorator';
 import {
   DeleteTaskUseCase,
@@ -16,6 +16,7 @@ import { DeleteTaskParamsDto } from '../dtos/delete-task.dto';
 import { ApiDeleteTask } from './docs/delete-task.swagger';
 
 @ApiTags('Tasks')
+@ApiBearerAuth()
 @Controller()
 export class DeleteTaskController {
   constructor(private readonly deleteTaskUseCase: DeleteTaskUseCase) {}

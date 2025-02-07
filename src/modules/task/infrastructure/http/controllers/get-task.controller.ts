@@ -1,5 +1,5 @@
 import { Controller, Get, HttpCode, HttpStatus, Param } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { User } from '@shared/infrastructure/http/decorators/user.decorator';
 import {
   GetTaskUseCase,
@@ -10,6 +10,7 @@ import { GetTaskParamsDto, GetTaskResponseDto } from '../dtos/get-task.dto';
 import { ApiGetTask } from './docs/get-task.swagger';
 
 @ApiTags('Tasks')
+@ApiBearerAuth()
 @Controller()
 export class GetTaskController {
   constructor(private readonly getTaskUseCase: GetTaskUseCase) {}
