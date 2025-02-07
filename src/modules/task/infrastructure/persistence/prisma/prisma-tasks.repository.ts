@@ -1,15 +1,14 @@
 import { Injectable } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
-import {
-  Pagination,
-  PaginationParams,
-} from '@shared/domain/value-objects/pagination';
 import { PrismaService } from '@shared/infrastructure/persistence/prisma/prisma.service';
+import { Pagination, PaginationParams } from '@shared/utils/pagination';
 import { Task } from '@src/modules/task/domain/entities/task.entity';
 import {
   TaskFilters,
   TasksRepository,
 } from '@src/modules/task/domain/repositories/tasks.repository';
+
+import { PrismaTaskMapper } from './mappers/prisma-task.mapper';
 
 @Injectable()
 export class PrismaTasksRepository implements TasksRepository {
@@ -28,17 +27,7 @@ export class PrismaTasksRepository implements TasksRepository {
       return null;
     }
 
-    return new Task(
-      {
-        title: task.title,
-        description: task.description,
-        status: Task.validateStatus(task.status),
-        userId: task.userId,
-        createdAt: task.createdAt,
-        updatedAt: task.updatedAt,
-      },
-      task.id,
-    );
+    return PrismaTaskMapper.toDomain(task);
   }
 
   async findById(id: string): Promise<Task | null> {
@@ -48,28 +37,11 @@ export class PrismaTasksRepository implements TasksRepository {
       return null;
     }
 
-    return new Task(
-      {
-        title: task.title,
-        description: task.description,
-        status: Task.validateStatus(task.status),
-        userId: task.userId,
-        createdAt: task.createdAt,
-        updatedAt: task.updatedAt,
-      },
-      task.id,
-    );
+    return PrismaTaskMapper.toDomain(task);
   }
 
   async update(task: Task): Promise<void> {
-    const toPrisma: Prisma.TaskUncheckedUpdateInput = {
-      title: task.title,
-      description: task.description,
-      status: task.status.toString(),
-      userId: task.userId,
-      createdAt: task.createdAt,
-      updatedAt: task.updatedAt,
-    };
+    const toPrisma = PrismaTaskMapper.toPrisma(task);
 
     await this.model.update({
       where: { id: task.id },
@@ -88,22 +60,23 @@ export class PrismaTasksRepository implements TasksRepository {
     const { page, pageSize } = options.pagination;
     const { title, description, status } = options.filters;
 
+    const where = {
+      userId,
+      title: title
+        ? { contains: title, mode: Prisma.QueryMode.insensitive }
+        : undefined,
+      description: description
+        ? { contains: description, mode: Prisma.QueryMode.insensitive }
+        : undefined,
+      status: status ?? undefined,
+    };
+
     const totalItems = this.model.count({
-      where: {
-        userId,
-        title: title ? { contains: title } : undefined,
-        description: description ? { contains: description } : undefined,
-        status: status ?? undefined,
-      },
+      where,
     });
 
     const tasks = this.model.findMany({
-      where: {
-        userId,
-        title: title ? { contains: title } : undefined,
-        description: description ? { contains: description } : undefined,
-        status: status ?? undefined,
-      },
+      where,
       skip: (page - 1) * pageSize,
       take: pageSize,
     });
@@ -111,19 +84,7 @@ export class PrismaTasksRepository implements TasksRepository {
     const [total, items] = await this.prisma.$transaction([totalItems, tasks]);
 
     return Pagination.create({
-      items: items.map((task) => {
-        return new Task(
-          {
-            title: task.title,
-            description: task.description,
-            status: Task.validateStatus(task.status),
-            userId: task.userId,
-            createdAt: task.createdAt,
-            updatedAt: task.updatedAt,
-          },
-          task.id,
-        );
-      }),
+      items: items.map((task) => PrismaTaskMapper.toDomain(task)),
       totalItems: total,
       page,
       pageSize,
@@ -131,15 +92,7 @@ export class PrismaTasksRepository implements TasksRepository {
   }
 
   async create(task: Task): Promise<void> {
-    const toPrisma: Prisma.TaskUncheckedCreateInput = {
-      id: task.id,
-      title: task.title,
-      description: task.description,
-      status: task.status.toString(),
-      userId: task.userId,
-      createdAt: task.createdAt,
-      updatedAt: task.updatedAt,
-    };
+    const toPrisma = PrismaTaskMapper.toPrisma(task);
 
     await this.model.create({ data: toPrisma });
   }
