@@ -3,7 +3,7 @@ import { IsString, MinLength } from 'class-validator';
 
 import { BaseTaskResponseDto } from './base-task.dto';
 
-export class CreateTaskRequestDto {
+export class CreateTaskBodyDto {
   @ApiProperty({
     example: 'Task 1',
   })

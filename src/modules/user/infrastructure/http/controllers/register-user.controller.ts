@@ -6,7 +6,7 @@ import {
   RegisterUserUseCaseInput,
 } from '@src/modules/user/application/use-cases/register-user.use-case';
 
-import { RegisterUserDto } from '../dtos/register-user.dto';
+import { RegisterUserBodyDto } from '../dtos/register-user.dto';
 import { ApiRegisterUser } from './docs/register-user.swagger';
 
 @ApiTags('Users')
@@ -18,7 +18,7 @@ export class RegisterUserController {
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
   @ApiRegisterUser()
-  async handle(@Body() body: RegisterUserDto) {
+  async handle(@Body() body: RegisterUserBodyDto) {
     const { name, email, password } = body;
 
     const registerUser: RegisterUserUseCaseInput = {

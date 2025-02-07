@@ -12,7 +12,7 @@ import {
   DeleteTaskUseCaseInput,
 } from '@src/modules/task/application/use-cases/delete-task.use-case';
 
-import { DeleteTaskRequestDto } from '../dtos/delete-task.dto';
+import { DeleteTaskParamsDto } from '../dtos/delete-task.dto';
 import { ApiDeleteTask } from './docs/delete-task.swagger';
 
 @ApiTags('Tasks')
@@ -25,7 +25,7 @@ export class DeleteTaskController {
   @ApiDeleteTask()
   async handle(
     @User() userId: string,
-    @Param() params: DeleteTaskRequestDto,
+    @Param() params: DeleteTaskParamsDto,
   ): Promise<void> {
     const { taskId } = params;
 

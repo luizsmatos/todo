@@ -7,7 +7,7 @@ import {
 } from '@src/modules/task/application/use-cases/create-task.use-case';
 
 import {
-  CreateTaskRequestDto,
+  CreateTaskBodyDto,
   CreateTaskResponseDto,
 } from '../dtos/create-task.dto';
 import { ApiCreateTask } from './docs/create-task.swagger';
@@ -22,7 +22,7 @@ export class CreateTaskController {
   @ApiCreateTask()
   async handle(
     @User() userId: string,
-    @Body() body: CreateTaskRequestDto,
+    @Body() body: CreateTaskBodyDto,
   ): Promise<CreateTaskResponseDto> {
     const { title, description } = body;
 

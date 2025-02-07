@@ -6,7 +6,7 @@ import {
   GetTaskUseCaseInput,
 } from '@src/modules/task/application/use-cases/get-task.use-case';
 
-import { GetTaskRequestDto, GetTaskResponseDto } from '../dtos/get-task.dto';
+import { GetTaskParamsDto, GetTaskResponseDto } from '../dtos/get-task.dto';
 import { ApiGetTask } from './docs/get-task.swagger';
 
 @ApiTags('Tasks')
@@ -19,7 +19,7 @@ export class GetTaskController {
   @ApiGetTask()
   async handle(
     @User() userId: string,
-    @Param() params: GetTaskRequestDto,
+    @Param() params: GetTaskParamsDto,
   ): Promise<GetTaskResponseDto> {
     const { taskId } = params;
 

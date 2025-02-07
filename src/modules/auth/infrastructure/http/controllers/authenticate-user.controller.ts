@@ -4,7 +4,7 @@ import { Public } from '@shared/infrastructure/http/decorators/public.decorator'
 import { AuthenticateUserUseCase } from '@src/modules/auth/application/use-cases/authenticate-user.use-case';
 
 import {
-  AuthenticateUserRequestDto,
+  AuthenticateUserBodyDto,
   AuthenticateUserResponseDto,
 } from '../dtos/authenticate-user.dto';
 import { ApiAuthenticateUser } from './docs/authenticate-user.swagger';
@@ -21,7 +21,7 @@ export class AuthenticateUserController {
   @HttpCode(HttpStatus.CREATED)
   @ApiAuthenticateUser()
   async handle(
-    @Body() body: AuthenticateUserRequestDto,
+    @Body() body: AuthenticateUserBodyDto,
   ): Promise<AuthenticateUserResponseDto> {
     const { email, password } = body;
 
