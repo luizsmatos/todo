@@ -13,7 +13,7 @@ export interface TaskFilters {
 
 export abstract class TasksRepository {
   abstract create(task: Task): Promise<void>;
-  abstract findByTitle(title: string): Promise<Task | null>;
+  abstract findByTitle(userId: string, title: string): Promise<Task | null>;
   abstract findById(id: string): Promise<Task | null>;
   abstract update(task: Task): Promise<void>;
   abstract delete(id: string): Promise<void>;
