@@ -11,14 +11,14 @@ interface PaginationProps<T> {
 }
 
 export class Pagination<T> {
-  public readonly currentPage: number;
+  public readonly page: number;
   public readonly pageSize: number;
   public readonly totalItems: number;
   public readonly totalPages: number;
   public readonly items: T[];
 
   constructor({ items, totalItems, page, pageSize }: PaginationProps<T>) {
-    this.currentPage = page;
+    this.page = page;
     this.pageSize = pageSize;
     this.totalItems = totalItems;
     this.totalPages = Math.ceil(totalItems / pageSize);
