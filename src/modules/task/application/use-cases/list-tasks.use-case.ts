@@ -1,8 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  Pagination,
-  PaginationParams,
-} from '@shared/domain/value-objects/pagination';
+import { Pagination, PaginationParams } from '@shared/utils/pagination';
 
 import { Task, TaskStatus } from '../../domain/entities/task.entity';
 import { TasksRepository } from '../../domain/repositories/tasks.repository';
