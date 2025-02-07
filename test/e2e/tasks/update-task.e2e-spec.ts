@@ -1,0 +1,57 @@
+import { INestApplication } from '@nestjs/common';
+import { Test } from '@nestjs/testing';
+import { AppModule } from '@src/app.module';
+import { PrismaService } from '@src/shared/infrastructure/persistence/prisma/prisma.service';
+import { createAndAuthenticateUser } from '@test/fixture/create-and-authenticate-user';
+import { createTask } from '@test/fixture/create-task';
+import request from 'supertest';
+import { App } from 'supertest/types';
+
+describe('Update Task (e2e)', () => {
+  let app: INestApplication<App>;
+  let prisma: PrismaService;
+
+  beforeAll(async () => {
+    const moduleRef = await Test.createTestingModule({
+      imports: [AppModule],
+    }).compile();
+
+    app = moduleRef.createNestApplication();
+    prisma = moduleRef.get<PrismaService>(PrismaService);
+
+    await app.init();
+  });
+
+  afterAll(async () => {
+    await app.close();
+  });
+
+  test('/tasks/:taskId (PUT)', async () => {
+    const { accessToken } = await createAndAuthenticateUser(app);
+
+    const createdTask = await createTask(app, accessToken);
+
+    const response = await request(app.getHttpServer())
+      .put(`/tasks/${createdTask.id}`)
+      .send({
+        title: 'title updated',
+        description: 'description updated',
+        status: 'DONE',
+      })
+      .set('Authorization', `Bearer ${accessToken}`);
+
+    expect(response.status).toBe(200);
+
+    const taskOnDatabase = await prisma.task.findFirst({
+      where: { id: createdTask.id },
+    });
+
+    expect(taskOnDatabase).toBeTruthy();
+
+    if (taskOnDatabase) {
+      expect(taskOnDatabase.title).toBe('title updated');
+      expect(taskOnDatabase.description).toBe('description updated');
+      expect(taskOnDatabase.status).toBe('DONE');
+    }
+  });
+});
