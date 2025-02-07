@@ -16,8 +16,10 @@ export class InMemoryTasksRepository implements TasksRepository {
     this.items.push(task);
   }
 
-  async findByTitle(title: string): Promise<Task | null> {
-    const task = this.items.find((task) => task.title === title);
+  async findByTitle(userId: string, title: string): Promise<Task | null> {
+    const task = this.items.find(
+      (task) => task.title === title && task.userId === userId,
+    );
 
     if (!task) {
       return null;
