@@ -14,14 +14,17 @@ services:
     depends_on:
       - db
     environment:
-      file: .env
+      - PORT=3000
+      - NODE_ENV=development
+      - JWT_SECRET=secret
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/tasks
   db:
     image: postgres
     container_name: task-db
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=task
+      - POSTGRES_DB=tasks
     ports:
       - "5432:5432"
     volumes:
