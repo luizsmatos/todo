@@ -10,7 +10,7 @@ Essas instruções permitirão que você obtenha uma cópia do projeto em opera�
 
 Antes de começar, certifique-se de ter os seguintes itens instalados:
 
-- [Node.js](https://nodejs.org/) (versão recomendada: 18+)
+- [Node.js](https://nodejs.org/) (versão recomendada: 22.13.1+)
 - [NestJS CLI](https://docs.nestjs.com/)
 - [Prisma](https://www.prisma.io/)
 - [Docker](https://www.docker.com/) e [Docker Compose](https://docs.docker.com/compose/)
