@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
 import { PrismaService } from '@shared/infrastructure/persistence/prisma/prisma.service';
 import { User } from '@src/modules/user/domain/entities/user.entity';
 import { UsersRepository } from '@src/modules/user/domain/repositories/users.repository';
+
+import { PrismaUserMapper } from './mappers/prisma-user.mapper';
 
 @Injectable()
 export class PrismaUsersRepository implements UsersRepository {
@@ -13,13 +14,7 @@ export class PrismaUsersRepository implements UsersRepository {
   }
 
   async create(user: User): Promise<void> {
-    const toPrisma: Prisma.UserCreateInput = {
-      name: user.name,
-      email: user.email,
-      password: user.password,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    };
+    const toPrisma = PrismaUserMapper.toPersistence(user);
 
     await this.model.create({ data: toPrisma });
   }
@@ -31,6 +26,16 @@ export class PrismaUsersRepository implements UsersRepository {
       return null;
     }
 
-    return new User(user, user.id);
+    return PrismaUserMapper.toDomain(user);
+  }
+
+  async findById(id: string): Promise<User | null> {
+    const user = await this.model.findUnique({ where: { id } });
+
+    if (!user) {
+      return null;
+    }
+
+    return PrismaUserMapper.toDomain(user);
   }
 }
